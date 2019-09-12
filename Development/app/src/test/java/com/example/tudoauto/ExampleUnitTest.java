@@ -1,4 +1,4 @@
-package com.example.meuauto;
+package com.example.tudoauto;
 
 import org.junit.Test;
 

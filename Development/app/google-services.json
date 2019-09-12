@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1018072937600",
+    "firebase_url": "https://tudoauto-2aefa.firebaseio.com",
+    "project_id": "tudoauto-2aefa",
+    "storage_bucket": "tudoauto-2aefa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018072937600:android:2b7b0df9d5090583086265",
+        "android_client_info": {
+          "package_name": "com.icti.tudoauto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018072937600-flqdt1qngqkgfcuo4b4t818qpfhauhdl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.icti.tudoauto",
+            "certificate_hash": "2abb3a8c68d6f919ea037c259172801e67a43414"
+          }
+        },
+        {
+          "client_id": "1018072937600-njdjbnjukiihlqt48fd873igdqtpkdao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEpmPQyGkBos0b8dBOtKigH2kXKVGZPUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018072937600-njdjbnjukiihlqt48fd873igdqtpkdao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

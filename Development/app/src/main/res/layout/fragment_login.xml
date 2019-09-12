@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main"
+    tools:context="com.icti.tudoauto.LoginFragment"
     android:background="@drawable/gradient_background">
 
     <LinearLayout
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:weightSum="100"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -33,7 +32,6 @@
                 android:layout_weight="1"/>
 
             <ImageView
-                android:id="@+id/car"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
@@ -81,7 +79,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="20"
+            android:layout_weight="60"
             android:orientation="horizontal"
             android:weightSum="10"
             xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -95,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="8"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+                android:layout_gravity="top">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -103,148 +101,137 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/email"
+                        android:id="@+id/log_email"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:inputType="textPersonName"
-                        android:text="teste6@hotmail.comm"
+                        android:hint="Digite seu email"
                         android:layout_gravity="center"
                         android:textColorLink="#275729" />
 
                     <EditText
-                        android:id="@+id/senha"
+                        android:id="@+id/log_password"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:inputType="textPassword"
-                        android:text="123456"
                         android:textColorHighlight="#386326"
+                        android:hint="Digite sua senha"
                         android:layout_gravity="center"
                         android:textColorLink="#74BB4B" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp">
+
+                        <Button
+                            android:id="@+id/log_loginbutton"
+                            android:background="@drawable/buttons"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Entrar" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:weightSum="20"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/log_fbbutton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                android:background="@drawable/buttons"
+                                android:src="@drawable/fb" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1.5"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/log_gglButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                android:background="@drawable/buttons"
+                                android:src="@drawable/gl" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1.5"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/log_createuser"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:scaleType="fitCenter"
+                                android:background="@drawable/buttons"
+                                android:src="@drawable/adduser" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="4"
+                            android:layout_height="match_parent" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
             </ScrollView>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="6"
-                android:layout_height="match_parent" >
-
-                <Button
-                    android:id="@+id/logar"
-                    android:background="@drawable/buttons"
-                    android:layout_gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Logar" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:weightSum="20"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/fbButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/buttons"
-                    android:src="@drawable/fb" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/gglButton"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/buttons"
-                    android:src="@drawable/gl" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1.5"
-                android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/gstButton"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    android:background="@drawable/buttons"
-                    android:src="@drawable/user" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="4"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
     </LinearLayout>
 
 

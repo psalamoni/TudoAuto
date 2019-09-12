@@ -1,4 +1,4 @@
-package com.example.meuauto;
+package com.icti.tudoauto;
 
 import androidx.fragment.app.Fragment;
 
@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MenuFragment extends Fragment {
+public class MeasureFragment extends Fragment {
 
-    public MenuFragment() {
+    public MeasureFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        return inflater.inflate(R.layout.fragment_measure, container, false);
     }
 }

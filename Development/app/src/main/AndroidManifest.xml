@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.meuauto">
+    package="com.icti.tudoauto">
 
     <application
         android:allowBackup="true"
@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Menu"
-            android:label="@string/title_activity_menu"
+            android:name=".MeasureActivity"
+            android:label="@string/title_activity_measure"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
