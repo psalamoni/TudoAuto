@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         String usuarioId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         this.register.setID_user(usuarioId);
-        databaseReference.child("userdata").child(register.getID_user()).setValue(register);
+        databaseReference.child("userdata").child(register.getID_user()).child("userifo").setValue(register);
         this.register = null;
         alert("Usuario Cadastrado com sucesso");
         LoginFragment login = new LoginFragment();

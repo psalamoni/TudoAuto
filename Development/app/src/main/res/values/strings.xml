@@ -9,4 +9,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_measure">MeasureActivity</string>
+
+    <string-array name="fueltype">
+        <item>Gasolina</item>
+        <item>Gasolina Aditivada</item>
+        <item>Álcool</item>
+        <item>Álcool Aditivado</item>
+        <item>Diesel</item>
+        <item>Diesel Aditivado</item>
+        <item>Diesel S10</item>
+        <item>Gás Natural</item>
+    </string-array>
+
+    <!-- MEASURE FRAGMENT -->
+    <!-- ALERT -->
+    <string name="measAlertTitle">Antes de Inserir o Combustível:</string>
+    <string name="measAlertMessage">Zere o odômetro (medidor de km), encha o tanque e insira o combustível que deseja a medição.</string>
 </resources>

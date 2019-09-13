@@ -6,14 +6,16 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.icti.tudoauto.Model.Measure;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import android.view.View;
 import android.widget.Toast;
 
-public class MeasureActivity extends AppCompatActivity {
+public class MeasureActivity extends AppCompatActivity implements MeasureFragment.OnKillListener, MeasureFragment.OnCofirmInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,16 @@ public class MeasureActivity extends AppCompatActivity {
 
     private void MeasureBegin() {
 
+        //Create Alert
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        builder.setTitle(R.string.measAlertTitle);
 
-        builder.setTitle("Antes de Inserir o Combustível:");
-
-        builder.setMessage("Zere o odômetro (medidos de km), encha o tanque e insira o combustível que deseja a medição.");
+        builder.setMessage(R.string.measAlertMessage);
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Toast.makeText(MeasureActivity.this, "Ok=" + arg1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MeasureActivity.this, "Cancelar=" + arg1, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,6 +56,16 @@ public class MeasureActivity extends AppCompatActivity {
         alert = builder.create();
 
         alert.show();
+    }
+
+    @Override
+    public void onKill() {
+        finish();
+    }
+
+    @Override
+    public void onConfirmInteraction(Measure measure) {
+        finish();
     }
 
 }

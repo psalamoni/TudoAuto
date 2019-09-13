@@ -3,6 +3,7 @@ package com.icti.tudoauto;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,10 @@ import com.icti.tudoauto.R;
  */
 public class MenuFragment extends Fragment {
 
-    private LinearLayout loading;
     private Button menufuel;
     private Button menumeasure;
     private Button menuefficiency;
+    private OnCallActivityInteractionListener mCallActivityListener;
 
     public MenuFragment() {
     }
@@ -32,8 +33,33 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         startComps(view);
+        eventClicks();
 
         return view;
+    }
+
+    private void eventClicks() {
+        menumeasure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCallActivityListener != null) {
+                    Class measure = MeasureActivity.class;
+
+                    mCallActivityListener.onCallActivityInteraction(measure);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MenuFragment.OnCallActivityInteractionListener) {
+            mCallActivityListener = (MenuFragment.OnCallActivityInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnCreateButtonFragmentInteractionListener");
+        }
     }
 
     private void startComps(View view) {
@@ -42,12 +68,9 @@ public class MenuFragment extends Fragment {
         menuefficiency = (Button) view.findViewById(R.id.menu_efficiency);
     }
 
-    private void processingin() {
-        loading.setVisibility(View.VISIBLE);
-    }
-
-    private void processingout() {
-        loading.setVisibility(View.GONE);
+    public interface OnCallActivityInteractionListener {
+        // TODO: Update argument type and name
+        void onCallActivityInteraction(Class newClass);
     }
 
 }
