@@ -1,6 +1,7 @@
 package com.icti.tudoauto;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -29,8 +30,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.icti.tudoauto.Model.Login;
+import com.icti.tudoauto.Model.Application;
+import com.icti.tudoauto.Model.Measure;
 import com.icti.tudoauto.Model.Register;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
@@ -41,30 +46,24 @@ public class MainActivity extends AppCompatActivity
     DatabaseReference databaseReference;
     private LinearLayout loading;
 
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Setting toolbar for the activity
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         
         //Initialize auth
         mAuth = FirebaseAuth.getInstance();
 
         //Make loading layout
-        loading = (LinearLayout) findViewById(R.id.main_loadlay);
+        loading = (LinearLayout) findViewById(R.id.loadlay);
         Glide.with(this)
                 .load(R.drawable.load) // aqui é teu gif
                 .asGif()
-                .into((ImageView) findViewById(R.id.main_load));
+                .into((ImageView) findViewById(R.id.loadgif));
 
         //Setting the fragment for activity
-
-        if (findViewById(R.id.fragment_container) != null) {
+        if (findViewById(R.id.main_container) != null) {
 
             if (savedInstanceState != null) {
                 return;
@@ -73,30 +72,8 @@ public class MainActivity extends AppCompatActivity
             LoginFragment login = new LoginFragment();
             login.setArguments(getIntent().getExtras());
 
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, login).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.main_container, login).commit();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -105,6 +82,16 @@ public class MainActivity extends AppCompatActivity
         FirebaseUser currentUser = mAuth.getCurrentUser();
         startFirebase();
         updateUI(currentUser);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        //Verify logged user
+        if (Application.VerifyNoLogin(this)==false) {
+            loginSuccessfull();
+        }
     }
 
     private void updateUI(FirebaseUser currentUser) {
@@ -123,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         String usuarioId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         this.register.setID_user(usuarioId);
-        databaseReference.child("userdata").child(register.getID_user()).child("userifo").setValue(register);
+        databaseReference.child("userdata").child(register.getID_user()).child("userinfo").setValue(register);
         this.register = null;
         alert("Usuario Cadastrado com sucesso");
         LoginFragment login = new LoginFragment();
@@ -133,6 +120,12 @@ public class MainActivity extends AppCompatActivity
 
     private void alert(String msg){
         Toast.makeText(MainActivity.this, msg,Toast.LENGTH_SHORT).show();
+    }
+
+    private void loginSuccessfull(){
+        Intent i = new Intent(MainActivity.this, MenuActivity.class);
+        startActivity(i);
+        Application.getUserData(this);
     }
 
     private void processingin() {
@@ -173,7 +166,7 @@ public class MainActivity extends AppCompatActivity
 
         processingin();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.replace(R.id.main_container, newFragment);
         transaction.addToBackStack(null);
         processingout();
 
@@ -194,10 +187,8 @@ public class MainActivity extends AppCompatActivity
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Intent i = new Intent(MainActivity.this, MenuActivity.class);
+                            loginSuccessfull();
                             processingout();
-                            startActivity(i);
                         } else {
                             // If sign in fails, display a message to the user.
                             alert("Email ou senha não conferem");

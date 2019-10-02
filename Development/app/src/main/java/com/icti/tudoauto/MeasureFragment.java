@@ -11,18 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.icti.tudoauto.Model.Application;
 import com.icti.tudoauto.Model.Measure;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -34,7 +26,7 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
     private String fueltype;
     private Button meascreate;
     private Button measback;
-    private OnCofirmInteractionListener mConfirmListener;
+    private OnConfirmListener mConfirmListener;
     private OnKillListener mKillListener;
     private Measure measure = new Measure();
     private FirebaseAuth mAuth;
@@ -45,18 +37,11 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_measure, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
-
-        loadIMeasureFromDb();
-
-        //If a mesure is incomplete, the activity is suspended
-        if (measure.getFueltype() != null){
+        if (Application.getImeasure()!=null) {
             mKillListener.onKill();
         }
-
-
-        View view = inflater.inflate(R.layout.fragment_measure, container, false);
 
         startComps(view);
 
@@ -69,6 +54,13 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
 
         if (context instanceof OnKillListener) {
             mKillListener = (OnKillListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+
+        if (context instanceof OnConfirmListener) {
+            mConfirmListener = (OnConfirmListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -106,35 +98,11 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
 
                     measure.setFueltype(fueltype);
 
-                    mConfirmListener.onConfirmInteraction(measure);
+                    mConfirmListener.onConfirm(measure);
                 }
             }
         });
 
-
-    }
-
-    private void loadIMeasureFromDb() {
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-
-        ValueEventListener dbListener = db.child("userdata").child(mAuth.getCurrentUser().getUid()).child("incompletemeasure").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
-                    measure = objSnapshot.getValue(Measure.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                alert("Falha ao buscar as medições");
-            }
-        });
-    }
-
-    private void alert(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -147,15 +115,13 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    public interface OnCofirmInteractionListener {
+    public interface OnConfirmListener {
         // TODO: Update argument type and name
-        void onConfirmInteraction(Measure measure);
+        void onConfirm(Measure measure);
     }
 
     public interface OnKillListener {
         // TODO: Update argument type and name
         void onKill();
     }
-
-
 }

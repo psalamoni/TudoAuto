@@ -4,28 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.icti.tudoauto.MainActivity">
+    tools:context=".FuelActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/main_container"
+                android:id="@+id/fuel_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.icti.tudoauto.com.icti.tudoauto.MainActivity"
+                tools:context="com.icti.tudoauto.com.icti.tudoauto.FuelActivity"
                 android:orientation="vertical">
 
             </LinearLayout>
 
             <include layout="@layout/layout_loading" />
-
 
         </FrameLayout>
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeasureFragment"
+    tools:context=".FuelFragment"
     android:background="@color/colorPrimary">
 
     <FrameLayout
@@ -16,8 +16,6 @@
             android:layout_height="match_parent"
             android:weightSum="100"
             android:orientation="vertical">
-
-
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -37,7 +35,6 @@
                     android:layout_weight="1"/>
 
                 <ImageView
-                    android:id="@+id/car"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="8"
@@ -57,6 +54,7 @@
                 android:layout_weight="3"
                 android:orientation="horizontal"
                 android:weightSum="10">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -66,12 +64,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="6"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:srcCompat="@drawable/tudoauto"
                         android:layout_gravity="bottom"
                         />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -100,21 +100,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/fuel_layout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Combustível"
-                    android:gravity="center"
-                    android:textStyle="bold"/>
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/meas_fueltype"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:autofillHints="Selecione o Combustível para Medição"
-                    android:spinnerMode="dropdown"
-                    android:gravity="center"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,18 +118,18 @@
                     android:paddingBottom="10dp">
 
                     <Button
-                        android:id="@+id/meas_back"
+                        android:id="@+id/fuel_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Cancelar" />
 
                     <Button
-                        android:id="@+id/meas_create"
+                        android:id="@+id/fuel_calculate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Registrar" />
+                        android:text="Calcular" />
 
                 </LinearLayout>
 
@@ -151,6 +143,5 @@
 
 
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

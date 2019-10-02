@@ -5,4 +5,5 @@
     <color name="colorAccent">#46474E</color>
     <color name="actionBarText">#000000</color>
     <color name="buttonsBackground">#b4b8be</color>
+    <color name="holdButtonsBackground">#42fefe00</color>
 </resources>

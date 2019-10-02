@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="id_arr">
+        <item>@id/fuel_0</item>
+        <item>@id/fuel_1</item>
+        <item>@id/fuel_2</item>
+        <item>@id/fuel_3</item>
+        <item>@id/fuel_4</item>
+        <item>@id/fuel_5</item>
+        <item>@id/fuel_6</item>
+        <item>@id/fuel_7</item>
+    </array>
+
+    <item name="fuel_0" type="id"/>
+    <item name="fuel_1" type="id"/>
+    <item name="fuel_2" type="id"/>
+    <item name="fuel_3" type="id"/>
+    <item name="fuel_4" type="id"/>
+    <item name="fuel_5" type="id"/>
+    <item name="fuel_6" type="id"/>
+    <item name="fuel_7" type="id"/>
+
+</resources>

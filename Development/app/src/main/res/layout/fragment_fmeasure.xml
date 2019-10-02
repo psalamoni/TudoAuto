@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MeasureFragment"
+    tools:context=".FMeasureFragment"
     android:background="@color/colorPrimary">
 
     <FrameLayout
@@ -16,8 +16,6 @@
             android:layout_height="match_parent"
             android:weightSum="100"
             android:orientation="vertical">
-
-
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -57,6 +55,7 @@
                 android:layout_weight="3"
                 android:orientation="horizontal"
                 android:weightSum="10">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -66,12 +65,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="6"
                     android:layout_height="match_parent">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:srcCompat="@drawable/tudoauto"
                         android:layout_gravity="bottom"
                         />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -103,18 +104,33 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Combustível"
+                    android:text="Total Abastecido (L)"
                     android:gravity="center"
                     android:textStyle="bold"/>
 
-                <Spinner
-                    android:id="@+id/meas_fueltype"
+                <EditText
+                    android:id="@+id/fmeas_fueltotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="Informe quantos litros abastecidos"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total Odômetro (KM)"
                     android:layout_marginTop="15dp"
-                    android:autofillHints="Selecione o Combustível para Medição"
-                    android:spinnerMode="dropdown"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/fmeas_odometertotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Informe o total de KM no odômetro"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,14 +142,14 @@
                     android:paddingBottom="10dp">
 
                     <Button
-                        android:id="@+id/meas_back"
+                        android:id="@+id/fmeas_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Cancelar" />
 
                     <Button
-                        android:id="@+id/meas_create"
+                        android:id="@+id/fmeas_create"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -151,6 +167,5 @@
 
 
     </FrameLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

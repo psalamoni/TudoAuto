@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Tudo Auto - Saiba tudo do seu Automóvel</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_signout">Sair</string>
     <string name="title_activity_menu">Menu</string>
+    <string name="title_activity_fuel">Abastecer</string>
     <string name="btn_abastecer"><b>Abastecer</b></string>
     <string name="btn_medicao"><b>Inserir \n Medição</b></string>
     <string name="btn_rendimento"><b>Ver \n Rendimento</b></string>
@@ -9,6 +10,38 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_measure">MeasureActivity</string>
+
+    <!-- ALERT -->
+
+    <!-- MEASURE FRAGMENT -->
+
+    <!---measure-->
+    <!---Begin-->
+    <string name="measAlertTitleBegin">Antes de Inserir o Combustível:</string>
+    <string name="measAlertMessageBegin">Zere o odômetro (medidor de km), encha o tanque e insira o combustível que deseja a medição.</string>
+    <!---End-->
+    <string name="measAlertTitleEnd">Pronto!</string>
+    <string name="measAlertMessageEnd">Agora é só esperar o próximo abastecimento para ter a sua primeira medição.</string>
+
+    <!---fmeasure-->
+    <!---Begin-->
+    <string name="fmeasAlertTitleBegin">Antes de Inserir a Medição:</string>
+    <string name="fmeasAlertMessageBegin1">Se sua última abastecida foi</string>
+    <string name="fmeasAlertMessageBegin2">e zerado o odômetro, encha o tanque novamente e preste atenção na quantidade de litros abstecida.</string>
+    <!---End-->
+    <string name="fmeasAlertMessageEnd">Já temos o rendimento do seu carro para </string>
+
+
+    <!-- FUEL FRAGMENT -->
+
+    <!---fuel-->
+    <!---Begin-->
+    <string name="fuelAlertTitleBegin">Vamos lá!</string>
+    <string name="fuelAlertMessageBegin">Para saber qual combustível abastecer, informe o valor dos combustíveis que você já realizou a medição.</string>
+    <!---End-->
+    <string name="fuelAlertTitleEnd">Você deve.....</string>
+    <string name="fuelAlertMessageEnd">Seu combustível ideal nesse caso é:</string>
+
 
     <string-array name="fueltype">
         <item>Gasolina</item>
@@ -20,9 +53,4 @@
         <item>Diesel S10</item>
         <item>Gás Natural</item>
     </string-array>
-
-    <!-- MEASURE FRAGMENT -->
-    <!-- ALERT -->
-    <string name="measAlertTitle">Antes de Inserir o Combustível:</string>
-    <string name="measAlertMessage">Zere o odômetro (medidor de km), encha o tanque e insira o combustível que deseja a medição.</string>
 </resources>
