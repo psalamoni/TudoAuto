@@ -2,6 +2,7 @@ package com.icti.tudoauto;
 
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -41,7 +42,10 @@ public class FuelFragment extends Fragment {
     private Button fuelback;
     private OnCalculateListener mCalculateListener;
     private OnKillListener mKillListener;
-    private EditText fuelprice;
+    private List<EditText> fuelprices = new ArrayList<EditText>();
+    private List<TextView> fueltitles = new ArrayList<TextView>();
+    private List<Integer> fuelids = new ArrayList<Integer>();
+    private List<Integer> fueltitleids = new ArrayList<Integer>();
 
     public FuelFragment() {
         // Required empty public constructor
@@ -84,41 +88,33 @@ public class FuelFragment extends Fragment {
 
         fuelcalculate = (Button) view.findViewById(R.id.fuel_calculate);
         fuelback = (Button) view.findViewById(R.id.fuel_back);
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.fuel_layout);
 
         //get mean values and fuel types ids
         List<Measure> means = Application.getMeans();
-        int[] ids = getResources().getIntArray(R.array.id_arr);
+        TypedArray fuelta = getResources().obtainTypedArray(R.array.fuel);
+        for (int i = 0; i < fuelta.length(); i++) {
+            fuelids.add(fuelta.getResourceId(i, 0));
+        }
+        TypedArray fueltitleta = getResources().obtainTypedArray(R.array.fueltitle);
+        for (int i = 0; i < fueltitleta.length(); i++) {
+            fueltitleids.add(fueltitleta.getResourceId(i, 0));
+        }
         final List<Integer> usedids = new ArrayList<Integer>();
 
         //implement fuel types available
         for (int i=0; i<means.size(); i++) {
 
+            fueltitles.add((TextView) view.findViewById(fueltitleids.get(i)));
+            fuelprices.add((EditText) view.findViewById(fuelids.get(i)));
+
             if (means.get(i).getVolume() != 0) {
                 usedids.add(i);
 
-                String name = means.get(i).getFueltype();
-
                 TextView newTextView = new TextView(context);
-                newTextView.setText("Preço " + name);
-                newTextView.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                newTextView.setGravity(Gravity.CENTER);
-                newTextView.setTypeface(newTextView.getTypeface(), Typeface.BOLD);
 
-                linearLayout.addView(newTextView);
+                fueltitles.get(i).setVisibility(View.VISIBLE);
+                fuelprices.get(i).setVisibility(View.VISIBLE);
 
-                EditText newEditText = new EditText(context);
-                newEditText.setId(ids[i]);
-                newEditText.setLayoutParams(new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-                newEditText.setGravity(Gravity.CENTER);
-                newEditText.setHint("Insira o preço - " + name);
-                newEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-                linearLayout.addView(newEditText);
             }
 
         }
@@ -137,7 +133,7 @@ public class FuelFragment extends Fragment {
         fuelcalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int[] ids = getResources().getIntArray(R.array.id_arr);
+
                 List<Measure> means = Application.getMeans();
                 Price efficiency = new Price();
 
@@ -145,8 +141,7 @@ public class FuelFragment extends Fragment {
                     Price price = new Price();
 
                     for (int i:usedids) {
-                        fuelprice = (EditText) view.findViewById(ids[i]);
-                        price.setPricefuel(i, Float.parseFloat(fuelprice.getText().toString()));
+                        price.setPricefuel(i, Float.parseFloat(fuelprices.get(i).getText().toString()));
                         efficiency.setPricefuel(i, means.get(i).getMeasureavg()/price.getPricefuel(i));
                     }
 

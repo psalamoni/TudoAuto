@@ -24,8 +24,16 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        //Toolbar
         Toolbar toolbar = findViewById(R.id.menutoolbar);
         setSupportActionBar(toolbar);
+
+        //Setting the fragment for activity
+        MenuFragment menuFragment = new MenuFragment();
+        menuFragment.setArguments(getIntent().getExtras());
+
+        getSupportFragmentManager().beginTransaction().add(R.id.menu_container, menuFragment).commit();
 
         //Start loading Layout
         loading = (LinearLayout) findViewById(R.id.loadlay);
@@ -34,15 +42,15 @@ public class MenuActivity extends AppCompatActivity
                 .asGif()
                 .into((ImageView) findViewById(R.id.loadgif));
 
-        //Start Service
-        Intent intent = new Intent(this, MenuService.class);
-        startService(intent);
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+
+        //Start Service
+        Intent intent = new Intent(this, MenuService.class);
+        startService(intent);
     }
 
     @Override
@@ -75,6 +83,14 @@ public class MenuActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause(){
+        //Kill Service
+        Intent intent = new Intent(this, MenuService.class);
+
+        super.onPause();
     }
 
     public void processingin() {

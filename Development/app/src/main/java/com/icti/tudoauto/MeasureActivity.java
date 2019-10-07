@@ -1,9 +1,12 @@
 package com.icti.tudoauto;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,17 +14,24 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.icti.tudoauto.Model.Measure;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.icti.tudoauto.Model.Application;
 
 import java.util.List;
 
-public class MeasureActivity extends AppCompatActivity implements MeasureFragment.OnKillListener, MeasureFragment.OnConfirmListener, FMeasureFragment.OnAddMeasureListener, FMeasureFragment.OnKillListener {
+public class MeasureActivity extends AppCompatActivity implements MeasureFragment.OnKillListener, MeasureFragment.OnConfirmListener, FMeasureFragment.OnFragmentInteractionListener {
 
     private AlertDialog alert;
     private LinearLayout loading;
     private Context context = this;
+    private static final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+    private static final int INITIAL_REQUEST=1337;
 
 
     @Override
@@ -79,6 +89,14 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+
     private void MeasureBegin() {
 
         //Create Alert
@@ -90,13 +108,6 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-
-            }
-        });
-
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                onKill();
             }
         });
 
@@ -152,12 +163,6 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                onKill();
-            }
-        });
-
         alert = builder.create();
 
         alert.show();
@@ -176,6 +181,9 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
             public void onClick(DialogInterface arg0, int arg1) {
 
                 processingin();
+
+                Application.getMeasures().add(Application.getImeasure());
+                Application.setImeasure(null);
 
                 if (Application.CreateMeasures(context)) {
                     alert("Medição salva com sucesso");
@@ -197,10 +205,6 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
         alert.show();
     }
 
-    private void alert(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
     private void processingin() {
         loading.setVisibility(View.VISIBLE);
     }
@@ -214,9 +218,21 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onConfirm(Measure measure) {
-        Application.setImeasure(measure);
+        Application application = new Application();
+
+        application.setMbaseContext(getBaseContext());
+        if (application.getPosition() != null) {
+            measure.setPosition(application.getPosition());
+
+            Application.setImeasure(measure);
+
+        } else {
+            processingout();
+            requestPermissions(LOCATION_PERMS, INITIAL_REQUEST);
+        }
         MeasureEnd();
     }
 
@@ -224,6 +240,11 @@ public class MeasureActivity extends AppCompatActivity implements MeasureFragmen
     public void onAddMeasure(Measure measure) {
         Application.setImeasure(measure);
         FMeasureEnd();
+    }
+
+    @Override
+    public void alert(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
 }

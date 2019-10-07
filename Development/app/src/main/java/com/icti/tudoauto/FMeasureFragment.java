@@ -17,14 +17,14 @@ import com.icti.tudoauto.Model.Application;
 import com.icti.tudoauto.Model.Measure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 
 public class FMeasureFragment extends Fragment {
 
-    private OnAddMeasureListener mAddMeasureListener;
-    private OnKillListener mKillListener;
+    private OnFragmentInteractionListener mFragmentInteractionListener;
     private EditText fueltotal;
     private EditText odometertotal;
     private Button fmeascreate;
@@ -40,7 +40,7 @@ public class FMeasureFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fmeasure, container, false);
 
         if (Application.getImeasure()==null) {
-            mKillListener.onKill();
+            mFragmentInteractionListener.onKill();
         }
 
         startComps(view);
@@ -52,18 +52,11 @@ public class FMeasureFragment extends Fragment {
     public void onAttach(Context context) {
         this.context = context;
 
-        if (context instanceof OnKillListener) {
-            mKillListener = (OnKillListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mFragmentInteractionListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnKillListener");
-        }
-
-        if (context instanceof OnAddMeasureListener) {
-            mAddMeasureListener = (OnAddMeasureListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnAddMeasureListener");
         }
 
         super.onAttach(context);
@@ -79,45 +72,47 @@ public class FMeasureFragment extends Fragment {
         fmeasback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mKillListener != null) {
+                if (mFragmentInteractionListener != null) {
 
-                    mKillListener.onKill();
+                    mFragmentInteractionListener.onKill();
                 }
             }
         });
         fmeascreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mAddMeasureListener != null) {
-                    Measure measure = Application.getImeasure();
+                String[] nullobj = {"","0"};
+                if (Arrays.asList(nullobj).contains(fueltotal.getText().toString()) == false && Arrays.asList(nullobj).contains(odometertotal.getText().toString()) == false) {
+                    if (mFragmentInteractionListener != null) {
+                        Measure measure = Application.getImeasure();
 
-                    long tslong = System.currentTimeMillis();
-                    /* Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(tslong);
+                        long tslong = System.currentTimeMillis();
+                        /* Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(tslong);
 
-                    int mYear = calendar.get(Calendar.YEAR);
-                    int mMonth = calendar.get(Calendar.MONTH);
-                    int mDay = calendar.get(Calendar.DAY_OF_MONTH); */
+                        int mYear = calendar.get(Calendar.YEAR);
+                        int mMonth = calendar.get(Calendar.MONTH);
+                        int mDay = calendar.get(Calendar.DAY_OF_MONTH); */
 
-                    measure.setVolume(Float.parseFloat(fueltotal.getText().toString()));
-                    measure.setDistance(Float.parseFloat(odometertotal.getText().toString()));
-                    measure.setMeasureavg(measure.getDistance()/measure.getVolume());
-                    measure.setTimestamp(tslong);
+                        measure.setVolume(Float.parseFloat(fueltotal.getText().toString()));
+                        measure.setDistance(Float.parseFloat(odometertotal.getText().toString()));
+                        measure.setMeasureavg(measure.getDistance() / measure.getVolume());
+                        measure.setTimestamp(tslong);
 
-                    mAddMeasureListener.onAddMeasure(measure);
+                        mFragmentInteractionListener.onAddMeasure(measure);
+                    }
+                } else {
+                    mFragmentInteractionListener.alert("Insira o valor total abastecido e odômetro");
                 }
             }
         });
 
     }
 
-    public interface OnAddMeasureListener {
+    public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onAddMeasure(Measure measure);
-    }
-
-    public interface OnKillListener {
-        // TODO: Update argument type and name
+        void alert(String msg);
         void onKill();
     }
 

@@ -1,11 +1,10 @@
 package com.icti.tudoauto;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -24,11 +23,12 @@ public class MenuService extends Service {
     private static Button menumeasure;
     private static Button menuefficiency;
     private static LinearLayout loading;
+    Handler handler;
 
     @Override
     public void onCreate() {
         Log.i(TAG, "Service onCreate");
-
+        handler = new Handler();
         isRunning = true;
     }
 
@@ -121,4 +121,5 @@ public class MenuService extends Service {
     public static void setLoading(LinearLayout loading) {
         MenuService.loading = loading;
     }
+
 }

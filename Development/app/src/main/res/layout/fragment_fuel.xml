@@ -7,9 +7,10 @@
     tools:context=".FuelFragment"
     android:background="@color/colorPrimary">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,68 +81,213 @@
                     android:layout_weight="2" />
 
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="10">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="80"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <LinearLayout
-                    android:id="@+id/fuel_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+
+                <ScrollView
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="match_parent"
+                    android:paddingTop="20dp"
                     android:orientation="vertical">
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/fueltitle_0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço da Gasolina"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço da Gasolina"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço da Gasolina Aditivada"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço da Gasolina Aditivada"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço do Álcool"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço do Álcool"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço do Álcool Aditivado"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço da Álcool Aditivado"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço do Diesel"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço do Diesel"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço do Diesel Aditivado"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço do Diesel Aditivado"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço do Diesel S10"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço do Diesel S10"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/fueltitle_7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Preço do Gás Natural"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:visibility="gone"/>
+
+                        <EditText
+                            android:id="@+id/fuel_7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Informe o preço do Gás Natural"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:visibility="gone"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="15dp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingBottom="10dp">
+
+                            <Button
+                                android:id="@+id/fuel_back"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Cancelar" />
+
+                            <Button
+                                android:id="@+id/fuel_calculate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Calcular" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </ScrollView>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="10dp">
-
-                    <Button
-                        android:id="@+id/fuel_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Cancelar" />
-
-                    <Button
-                        android:id="@+id/fuel_calculate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Calcular" />
-
-                </LinearLayout>
-
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
         </LinearLayout>
-
-
-    </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

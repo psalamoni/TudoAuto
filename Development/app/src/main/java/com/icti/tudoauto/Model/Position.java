@@ -8,8 +8,7 @@ public class Position {
 
     private double longitude;
     private double latitude;
-    private String cityName = null;
-    private List<Address> addresses;
+    private String adressLine = null;
 
     public double getLongitude() {
         return longitude;
@@ -27,21 +26,12 @@ public class Position {
         this.latitude = latitude;
     }
 
-    public String getCityName() {
-        return cityName;
+    public String getAdressLine() {
+        return adressLine;
     }
 
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setAdressLine(String adressLine) {
+        this.adressLine = adressLine;
     }
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
-    }
-
 
 }

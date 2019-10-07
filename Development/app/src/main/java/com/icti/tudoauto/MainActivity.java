@@ -1,19 +1,16 @@
 package com.icti.tudoauto;
 
+import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,11 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.icti.tudoauto.Model.Login;
 import com.icti.tudoauto.Model.Application;
-import com.icti.tudoauto.Model.Measure;
 import com.icti.tudoauto.Model.Register;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
@@ -45,13 +39,23 @@ public class MainActivity extends AppCompatActivity
     private Register register;
     DatabaseReference databaseReference;
     private LinearLayout loading;
+    private static final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+    private static final int INITIAL_REQUEST=1337;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        //Request Position
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(LOCATION_PERMS, INITIAL_REQUEST);
+        }
+
         //Initialize auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume(){
         super.onResume();
+
+
 
         //Verify logged user
         if (Application.VerifyNoLogin(this)==false) {
@@ -125,7 +131,7 @@ public class MainActivity extends AppCompatActivity
     private void loginSuccessfull(){
         Intent i = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(i);
-        Application.getUserData(this);
+        Application.importUserData(this);
     }
 
     private void processingin() {

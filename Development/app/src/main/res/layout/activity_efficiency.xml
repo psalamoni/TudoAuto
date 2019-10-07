@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.icti.tudoauto.MenuActivity">
+    tools:context=".EfficiencyActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/menutoolbar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -30,10 +30,10 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/menu_container"
+                android:id="@+id/efficiency_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.icti.tudoauto.com.icti.tudoauto.MenuActivity"
+                tools:context="com.icti.tudoauto.com.icti.tudoauto.EfficiencyActivity"
                 android:orientation="vertical">
 
             </LinearLayout>
@@ -41,6 +41,7 @@
             <include layout="@layout/layout_loading" />
 
         </FrameLayout>
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

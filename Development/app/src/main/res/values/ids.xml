@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <array name="id_arr">
+    <array name="fuel">
         <item>@id/fuel_0</item>
         <item>@id/fuel_1</item>
         <item>@id/fuel_2</item>
@@ -12,13 +12,38 @@
         <item>@id/fuel_7</item>
     </array>
 
-    <item name="fuel_0" type="id"/>
-    <item name="fuel_1" type="id"/>
-    <item name="fuel_2" type="id"/>
-    <item name="fuel_3" type="id"/>
-    <item name="fuel_4" type="id"/>
-    <item name="fuel_5" type="id"/>
-    <item name="fuel_6" type="id"/>
-    <item name="fuel_7" type="id"/>
+    <array name="fueltitle">
+        <item>@id/fueltitle_0</item>
+        <item>@id/fueltitle_1</item>
+        <item>@id/fueltitle_2</item>
+        <item>@id/fueltitle_3</item>
+        <item>@id/fueltitle_4</item>
+        <item>@id/fueltitle_5</item>
+        <item>@id/fueltitle_6</item>
+        <item>@id/fueltitle_7</item>
+    </array>
+
+    <array name="efftitle">
+        <item>@id/efftitle_0</item>
+        <item>@id/efftitle_1</item>
+        <item>@id/efftitle_2</item>
+        <item>@id/efftitle_3</item>
+        <item>@id/efftitle_4</item>
+        <item>@id/efftitle_5</item>
+        <item>@id/efftitle_6</item>
+        <item>@id/efftitle_7</item>
+    </array>
+
+    <array name="eff">
+        <item>@id/eff_0</item>
+        <item>@id/eff_1</item>
+        <item>@id/eff_2</item>
+        <item>@id/eff_3</item>
+        <item>@id/eff_4</item>
+        <item>@id/eff_5</item>
+        <item>@id/eff_6</item>
+        <item>@id/eff_7</item>
+    </array>
+
 
 </resources>

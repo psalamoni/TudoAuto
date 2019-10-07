@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.icti.tudoauto.MenuFragment"
-    tools:showIn="@layout/activity_menu"
+    tools:context="MenuFragment"
     android:background="@color/colorPrimary">
 
     <LinearLayout
@@ -108,8 +107,8 @@
                         android:layout_height="150dp"
                         android:layout_marginTop="20dp"
                         android:textStyle="bold"
-                        android:alpha="0.5"
-                        android:text="@string/btn_abastecer" />
+                        android:alpha="0.6"
+                        android:text="@string/btn_abastecer"/>
 
                     <Button
                         android:background="@drawable/buttons"
@@ -119,7 +118,7 @@
                         android:layout_height="150dp"
                         android:layout_marginTop="20dp"
                         android:textStyle="bold"
-                        android:alpha="0.5"
+                        android:alpha="0.6"
                         android:text="@string/btn_medicao"/>
 
                     <Button
@@ -130,7 +129,7 @@
                         android:layout_height="150dp"
                         android:layout_marginTop="20dp"
                         android:textStyle="bold"
-                        android:alpha="0.5"
+                        android:alpha="0.6"
                         android:text="@string/btn_rendimento"/>
                 </LinearLayout>
 

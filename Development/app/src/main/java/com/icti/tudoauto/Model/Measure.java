@@ -6,6 +6,7 @@ public class Measure {
     private float volume;
     private float distance;
     private float measureavg;
+    private Position position;
     private long timestamp;
 
     public Measure() {
@@ -41,6 +42,14 @@ public class Measure {
 
     public void setMeasureavg(float measureavg) {
         this.measureavg = measureavg;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public long getTimestamp() {

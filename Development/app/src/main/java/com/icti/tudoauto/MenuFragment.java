@@ -21,6 +21,7 @@ import com.icti.tudoauto.R;
  */
 public class MenuFragment extends Fragment {
 
+    public static OnCallActivityInteractionListener OnCallActivityInteractionListener;
     private Button menufuel;
     private Button menumeasure;
     private Button menuefficiency;
@@ -44,13 +45,16 @@ public class MenuFragment extends Fragment {
     }
 
     private void eventClicks() {
+
         menumeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mCallActivityListener != null) {
-                    Class measure = MeasureActivity.class;
+                    if (menumeasure.getAlpha() == 1) {
+                        Class measure = MeasureActivity.class;
 
-                    mCallActivityListener.onCallActivityInteraction(measure);
+                        mCallActivityListener.onCallActivityInteraction(measure);
+                    }
                 }
             }
         });
@@ -58,9 +62,23 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (mCallActivityListener != null) {
-                    Class fmeasure = FuelActivity.class;
+                    if (menufuel.getAlpha() == 1) {
+                        Class fmeasure = FuelActivity.class;
 
-                    mCallActivityListener.onCallActivityInteraction(fmeasure);
+                        mCallActivityListener.onCallActivityInteraction(fmeasure);
+                    }
+                }
+            }
+        });
+        menuefficiency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCallActivityListener != null) {
+                    if (menuefficiency.getAlpha() == 1) {
+                        Class efficiency = EfficiencyActivity.class;
+
+                        mCallActivityListener.onCallActivityInteraction(efficiency);
+                    }
                 }
             }
         });

@@ -35,20 +35,6 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_measure, container, false);
-
-        if (Application.getImeasure()!=null) {
-            mKillListener.onKill();
-        }
-
-        startComps(view);
-
-        return view;
-    }
-
-    @Override
     public void onAttach(Context context) {
         this.context = context;
 
@@ -67,6 +53,27 @@ public class MeasureFragment extends Fragment implements AdapterView.OnItemSelec
         }
 
         super.onAttach(context);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_measure, container, false);
+
+        if (Application.getImeasure()!=null) {
+            mKillListener.onKill();
+        }
+
+        startComps(view);
+
+        return view;
+    }
+
+    @Override
+    public void onDetach() {
+        mKillListener = null;
+        mConfirmListener = null;
+        super.onDetach();
     }
 
     private void startComps(View view) {

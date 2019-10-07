@@ -1,11 +1,15 @@
 package com.icti.tudoauto;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,16 +17,24 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.icti.tudoauto.Model.Application;
+import com.icti.tudoauto.Model.Position;
 import com.icti.tudoauto.Model.Price;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
+
 public class FuelActivity extends AppCompatActivity implements FuelFragment.OnCalculateListener, FuelFragment.OnKillListener {
 
     private AlertDialog alert;
     private LinearLayout loading;
+    private static final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+    private static final int INITIAL_REQUEST=1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +60,14 @@ public class FuelActivity extends AppCompatActivity implements FuelFragment.OnCa
                 .load(R.drawable.load) // aqui é teu gif
                 .asGif()
                 .into((ImageView) findViewById(R.id.loadgif));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
     }
 
     private void FuelBegin() {
@@ -85,7 +105,7 @@ public class FuelActivity extends AppCompatActivity implements FuelFragment.OnCa
 
         builder.setTitle(R.string.fuelAlertTitleEnd);
 
-        builder.setMessage(getString(R.string.fuelAlertMessageEnd) + "\n\n" + fuelTypeList.get(idmax) + "\n" + efficiency.getPricefuel(idmax));
+        builder.setMessage(getString(R.string.fuelAlertMessageEnd) + "\n\n" + fuelTypeList.get(idmax) + "\n" + efficiency.getPricefuel(idmax) + " Kilometros por Real");
 
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
@@ -122,6 +142,7 @@ public class FuelActivity extends AppCompatActivity implements FuelFragment.OnCa
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCalculate(Price price, Price efficiency) {
         Application application = new Application();
@@ -143,16 +164,21 @@ public class FuelActivity extends AppCompatActivity implements FuelFragment.OnCa
         processingin();
 
         application.setMbaseContext(getBaseContext());
-        price.setLocationPosition(application.getPosition());
+        if (application.getPosition() != null) {
+            price.setPosition(application.getPosition());
+            price.setTimestamp(System.currentTimeMillis());
 
-        Application.setPrice(price);
+            Application.setPrice(price);
 
-        if (Application.CreatePrices(this)) {
-            alert("Combustível salvo com sucesso");
-
+            if (Application.CreatePrices(this)) {
+                processingout();
+                FuelEnd(fuelTypeList, efficiency, idmax);
+            }
+            ;
+        } else {
             processingout();
-            FuelEnd(fuelTypeList, efficiency, idmax);
-        };
+            requestPermissions(LOCATION_PERMS, INITIAL_REQUEST);
+        }
     }
 
     @Override

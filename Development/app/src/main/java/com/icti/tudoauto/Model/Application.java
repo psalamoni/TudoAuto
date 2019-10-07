@@ -9,9 +9,14 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.icti.tudoauto.FuelActivity;
 import com.icti.tudoauto.R;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,19 +35,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static androidx.core.app.ActivityCompat.requestPermissions;
 import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 
 public class Application {
 
     private static Measure imeasure;
-    private static List<Measure> measures = new ArrayList<Measure>();
+    private static List<Measure> measures;
     private static Register logindata;
-    private static List<Measure> means = new ArrayList<Measure>();
+    private static List<Measure> means;
     private static Price price;
-    private static List<Price> prices = new ArrayList<Price>();
+    private static List<Price> prices;
     private Context mbaseContext;
-    private Position position;
+    private Position position = new Position();
+
+    //-----------------------------------------------------------------------------------------------------------------------------PUBLIC FUNCTIONS
 
     public static boolean VerifyNoLogin(Context context) {
         FirebaseAuth mAuth;
@@ -60,7 +69,7 @@ public class Application {
 
     }
 
-    public static void getUserData(final Context context) {
+    public static void importUserData(final Context context) {
         FirebaseAuth mAuth;
         DatabaseReference db;
 
@@ -76,6 +85,16 @@ public class Application {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //importing data from db
+                DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                String usuarioId = mAuth.getCurrentUser().getUid();
+
+                //Creating lists
+                measures = new ArrayList<Measure>();
+                means = new ArrayList<Measure>();
+                prices = new ArrayList<Price>();
+
                 Application.setImeasure(dataSnapshot.child("incompletemeasure").getValue(Measure.class));
                 Application.setLogindata(dataSnapshot.child("userinfo").getValue(Register.class));
                 for (DataSnapshot objSnapshot : dataSnapshot.child("measures").getChildren()) {
@@ -86,12 +105,11 @@ public class Application {
                     Measure mean = objSnapshot.getValue(Measure.class);
                     means.add(mean);
                 }
-
                 for (DataSnapshot objSnapshot : dataSnapshot.child("prices").getChildren()) {
                     Price price = objSnapshot.getValue(Price.class);
                     prices.add(price);
                 }
-
+                checkMeansList(context);
             }
 
             @Override
@@ -104,6 +122,75 @@ public class Application {
 
     private static void alert(String msg, Context context) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void checkMeansList(Context context) {
+        //CORRECT POSIBLE FAULTS
+        Boolean val = true;
+
+        String[] fuelType = context.getResources().getStringArray(R.array.fueltype);
+        List<String> fuelTypeList = Arrays.asList(fuelType);
+        fuelTypeList = new ArrayList<String>(fuelTypeList);
+
+        if (means.size()<fuelTypeList.size()){
+            for (int i = 0; i < fuelTypeList.size(); i++) {
+                Measure tempMeasure = new Measure();
+                tempMeasure.setFueltype(fuelTypeList.get(i));
+                means.add(tempMeasure);
+            }
+            val = false;
+        } else {
+            for (int i = 0; i < fuelTypeList.size(); i++) {
+                if (means.get(i).getFueltype() != fuelTypeList.get(i) || means.size() != fuelTypeList.size()) {
+                    val = false;
+                }
+            }
+        }
+
+        if (val == false) {
+            redoMeansList(context);
+        }
+    }
+
+    public static void redoMeansList(Context context) {
+
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String usuarioId = mAuth.getCurrentUser().getUid();
+
+        String[] fuelType = context.getResources().getStringArray(R.array.fueltype);
+        List<String> fuelTypeList = Arrays.asList(fuelType);
+        fuelTypeList = new ArrayList<String>(fuelTypeList);
+
+        means = null;
+        means = new ArrayList<Measure>();
+        for (int i = 0; i < fuelTypeList.size(); i++) {
+            Measure tempMeasure = new Measure();
+            tempMeasure.setFueltype(fuelTypeList.get(i));
+            means.add(tempMeasure);
+        }
+        for (int i = measures.size()-1; i >= 0; i--) {
+            for (int j = 0; j < means.size(); j++) {
+                if (means.get(j).getFueltype().equals(measures.get(i).getFueltype())) {
+                    if (means.get(j).getVolume() != 0) {
+                        float newVolume = means.get(j).getVolume() + 1;
+                        means.get(j).setMeasureavg((means.get(j).getDistance() + measures.get(i).getMeasureavg()) / 2);
+                        means.get(j).setDistance((means.get(j).getDistance() * means.get(j).getVolume() + measures.get(i).getMeasureavg()) / newVolume);
+                        means.get(j).setVolume(newVolume);
+                        break;
+                    } else {
+                        float newVolume = 1;
+                        means.get(j).setVolume(newVolume);
+                        means.get(j).setDistance(measures.get(i).getMeasureavg());
+                        means.get(j).setPosition(measures.get(i).getPosition());
+                        means.get(j).setMeasureavg(measures.get(i).getMeasureavg());
+                        means.get(j).setTimestamp(measures.get(i).getTimestamp());
+                        break;
+                    }
+                }
+            }
+        }
+        db.child("userdata").child(usuarioId).child("means").setValue(means);
     }
 
     public static void ConnectFirebase(Context context) {
@@ -142,43 +229,11 @@ public class Application {
     }
 
     public static boolean CreateMeasures(Context context) {
+
         DatabaseReference databaseReference;
-
-        measures.add(imeasure);
-
-        String[] fuelType = context.getResources().getStringArray(R.array.fueltype);
-        List<String> fuelTypeList = Arrays.asList(fuelType);
-        fuelTypeList = new ArrayList<String>(fuelTypeList);
-
-        if (means.size() == 0) {
-            for (int i = 0; i < fuelTypeList.size(); i++) {
-                Measure tempMeasure = new Measure();
-                tempMeasure.setFueltype(fuelTypeList.get(i));
-                means.add(imeasure);
-            }
-        }
-
-        for (int i = 0; i < means.size(); i++) {
-            if (means.get(i).getFueltype() == imeasure.getFueltype()) {
-                if (means.get(i).getVolume() != 0) {
-                    float newVolume = means.get(i).getVolume() + 1;
-                    means.get(i).setMeasureavg((means.get(i).getDistance() + imeasure.getMeasureavg()) / 2);
-                    means.get(i).setDistance((means.get(i).getDistance() * means.get(i).getVolume() + imeasure.getMeasureavg()) / newVolume);
-                    means.get(i).setVolume(newVolume);
-                    break;
-                } else {
-                    float newVolume = 1;
-                    imeasure.setVolume(newVolume);
-                    imeasure.setDistance(imeasure.getMeasureavg());
-                    means.set(i, imeasure);
-                    break;
-                }
-            }
-        }
-
-        imeasure = null;
-
         String usuarioId = getLogindata().getID_user();
+
+        redoMeansList(context);
 
         databaseReference = startFirebase(context);
         databaseReference.child("userdata").child(usuarioId).child("measures").setValue(measures);
@@ -211,21 +266,6 @@ public class Application {
             position.setLatitude(loc.getLatitude());
             position.setLongitude(loc.getLongitude());
 
-            /*----------to get City-Name from coordinates ------------- */
-            String cityName = null;
-            Geocoder gcd = new Geocoder(mbaseContext,
-                    Locale.getDefault());
-            List<Address> addresses;
-            try {
-                addresses = gcd.getFromLocation(loc.getLatitude(), loc
-                        .getLongitude(), 1);
-                if (addresses.size() > 0)
-                    position.setAddresses(addresses);
-                cityName = addresses.get(0).getLocality();
-                position.setCityName(cityName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
         @Override
@@ -245,30 +285,61 @@ public class Application {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public Position getPosition() {
-        LocationManager locationManager;
+        LocationManager mLocationManager;
         LocationListener locationListener;
 
-        locationManager = (LocationManager)
+        mLocationManager = (LocationManager)
                 mbaseContext.getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
 
         if (displayGpsStatus()) {
             locationListener = new MyLocationListener();
 
+            //Check if app has geolocation permissions
             if (checkSelfPermission(mbaseContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(mbaseContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-            }
-            locationManager.requestLocationUpdates(LocationManager
-                    .GPS_PROVIDER, 5000, 10, locationListener);
-        }
+                return null;
+            } else {
 
-        return position;
+                for (String provider : providers) {
+                    Location l = mLocationManager.getLastKnownLocation(provider);
+                    if (l == null) {
+                        continue;
+                    }
+                    if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                        // Found best last known location: %s", l);
+                        bestLocation = l;
+                    }
+
+                    position.setLongitude(bestLocation.getLongitude());
+                    position.setLatitude(bestLocation.getLatitude());
+                }
+
+                mLocationManager.requestLocationUpdates(LocationManager
+                        .GPS_PROVIDER, 5000, 10, locationListener);
+
+                /*----------to get City-Name from coordinates ------------- */
+                String adressLine = null;
+                Geocoder gcd = new Geocoder(mbaseContext,
+                        Locale.getDefault());
+                List<Address> addresses;
+                try {
+                    addresses = gcd.getFromLocation(position.getLatitude(), position.getLongitude(), 1);
+                    if (addresses.size() > 0) {
+                        adressLine = addresses.get(0).getAddressLine(0);
+                        position.setAdressLine(adressLine);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            return position;
+        } else {
+            return null;
+        }
     }
 
     //-----------------------------------------------------------------------------------------------------------------------------GETTERS AND SETTERS

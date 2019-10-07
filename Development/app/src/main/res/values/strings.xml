@@ -3,6 +3,7 @@
     <string name="action_signout">Sair</string>
     <string name="title_activity_menu">Menu</string>
     <string name="title_activity_fuel">Abastecer</string>
+    <string name="title_activity_efficiency">Medição</string>
     <string name="btn_abastecer"><b>Abastecer</b></string>
     <string name="btn_medicao"><b>Inserir \n Medição</b></string>
     <string name="btn_rendimento"><b>Ver \n Rendimento</b></string>
@@ -39,7 +40,7 @@
     <string name="fuelAlertTitleBegin">Vamos lá!</string>
     <string name="fuelAlertMessageBegin">Para saber qual combustível abastecer, informe o valor dos combustíveis que você já realizou a medição.</string>
     <!---End-->
-    <string name="fuelAlertTitleEnd">Você deve.....</string>
+    <string name="fuelAlertTitleEnd">Resultado!</string>
     <string name="fuelAlertMessageEnd">Seu combustível ideal nesse caso é:</string>
 
 
