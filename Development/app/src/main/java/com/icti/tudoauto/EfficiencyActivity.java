@@ -128,12 +128,14 @@ public class EfficiencyActivity extends AppCompatActivity implements EfficiencyF
     private void changeFragment(Fragment newFragment, int id) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(id, newFragment);
-        transaction.addToBackStack(null);
-
         transaction.commit();
     }
 
     public void onKill() {
         finish();
+    }
+
+    public interface OnUpdatedMeasuresListener {
+        void onDeletedMeasures();
     }
 }

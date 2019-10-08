@@ -52,16 +52,15 @@ public class EfficiencyFragmentList extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_efficiency_list, container, false);
 
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            mAdapter = new EfficiencyRecyclerViewAdapter(new ArrayList<>(), mDeleteListener);
-            recyclerView.setAdapter(mAdapter);
+        Context context = view.getContext();
+        RecyclerView recyclerView = (RecyclerView) view;
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-            exibirTodosRequisitos();
-        }
+        mAdapter = new EfficiencyRecyclerViewAdapter(new ArrayList<>(), mDeleteListener);
+        recyclerView.setAdapter(mAdapter);
+
+        exibirTodosRequisitos();
 
         setHasOptionsMenu(true);
 

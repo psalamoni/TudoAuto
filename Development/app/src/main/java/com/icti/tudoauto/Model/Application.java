@@ -263,8 +263,8 @@ public class Application {
         @Override
         public void onLocationChanged(Location loc) {
 
-            position.setLatitude(loc.getLatitude());
-            position.setLongitude(loc.getLongitude());
+            //position.setLatitude(loc.getLatitude());
+            //position.setLongitude(loc.getLongitude());
 
         }
 
@@ -285,7 +285,6 @@ public class Application {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public Position getPosition() {
         LocationManager mLocationManager;
         LocationListener locationListener;
@@ -304,6 +303,7 @@ public class Application {
             } else {
 
                 for (String provider : providers) {
+                    mLocationManager.requestSingleUpdate(provider, locationListener, null);
                     Location l = mLocationManager.getLastKnownLocation(provider);
                     if (l == null) {
                         continue;
@@ -316,9 +316,6 @@ public class Application {
                     position.setLongitude(bestLocation.getLongitude());
                     position.setLatitude(bestLocation.getLatitude());
                 }
-
-                mLocationManager.requestLocationUpdates(LocationManager
-                        .GPS_PROVIDER, 5000, 10, locationListener);
 
                 /*----------to get City-Name from coordinates ------------- */
                 String adressLine = null;
